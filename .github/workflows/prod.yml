@@ -35,7 +35,7 @@ jobs:
         run: |
           git clone https://github.com/Manoj-Kumar-Munda/ops.git
           cd ops
-          sed -i "s|manojkr999/todo-next-app:.*|manojkr999/todo-next-app:${{ github.sha }}|g" manifest.yml
+          sed -i "s|manojkr999/todo-next-app:.*|manojkr999/todo-next-app:${{ github.sha }}|g" prod.yml
           
           git config user.name "github-actions[bot]"
           git config user.email "actions@github.com"
