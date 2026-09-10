@@ -26,5 +26,5 @@ jobs:
         with:
           context: .
           file: Dockerfile
-          tags: manojkr999/todo-next-app:{{github.sha}}
+          tags: manojkr999/todo-next-app:${{ github.sha }}
           push: true
