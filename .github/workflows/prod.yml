@@ -32,13 +32,14 @@ jobs:
       - name: Clone ops repo and update image tags
         env:
           PAT: ${{ secrets.PAT }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          git clone https://github.com/Manoj-Kumar-Munda/ops.git
+          git clone https://x-access-token:${PAT}@github.com/Manoj-Kumar-Munda/ops.git
           cd ops
-          sed -i "s|manojkr999/todo-next-app:.*|manojkr999/todo-next-app:${{ github.sha }}|g" prod.yml
-          
+          sed -i "s|\(image: manojkr999/todo-next-app:\)[^[:space:]]*|\1${IMAGE_TAG}|" manifest.yml
+          grep "manojkr999/todo-next-app:${IMAGE_TAG}" manifest.yml
           git config user.name "github-actions[bot]"
           git config user.email "actions@github.com"
-          git add .
-          git commit -m "Update image tag"
-          git push https://${{ secrets.PAT }}@github.com/Manoj-Kumar-Munda/ops.git
+          git add manifest.yml
+          git commit -m "Update image tag to ${IMAGE_TAG}"
+          git push https://${PAT}@github.com/Manoj-Kumar-Munda/ops.git HEAD:master
